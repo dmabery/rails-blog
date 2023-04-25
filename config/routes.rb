@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # controlerName#actionName
+
+  get "/blog_posts/:id", to: "blog_posts#show", as: :blog_post
   root "blog_posts#index"
 end
