@@ -1,4 +1,7 @@
 class BlogPostsController < ApplicationController
+
+  # this controller - all controllers actually - defines where the user should do when different things happen
+
   def index
     @blog_posts = BlogPost.all
   end
@@ -11,5 +14,20 @@ class BlogPostsController < ApplicationController
 
   def new
     @blog_post = BlogPost.new
+  end
+
+  def create
+    @blog_post = BlogPost.new(blog_post_params)
+    if @blog_post.save # if save works, redirect to new post. if not, render new action
+      redirect_to @blog_post
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def blog_post_params
+    params.require(:blog_post).permit(:title, :body) # only allowing certain params to be saved to db from blog_post parameters
   end
 end
